@@ -2,8 +2,9 @@
 
 DeviceOrientation の使えるタッチデバイスで確認できます。
 
-<img width=240 src="images/request.jpg">
-<img width=240 src="images/permitted.jpg">
+|許可前 |許可後 |
+|- |- |
+|<img width=240 src="images/request.jpg"> | <img width=240 src="images/permitted.jpg"> |
 
 #### nuxt
 
@@ -35,4 +36,4 @@ docker を起動
 docker-compose up
 ```
 
-スマートフォンからhttps://192.168.xxx.xxx:3443にアクセスすると、httpsでnuxtにつながります。
+スマートフォンからhttps://192.168.xxx.xxx:3443 にアクセスすると、httpsでnuxtにつながります。
