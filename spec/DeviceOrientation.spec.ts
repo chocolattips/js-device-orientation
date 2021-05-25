@@ -23,10 +23,12 @@ describe("DeviceOrientation", () => {
           .fn()
           .mockImplementationOnce(() => Promise.resolve("granted"))
         window.DeviceOrientationEvent = o
+        window.ontouchstart = () => {}
       })
 
       afterEach(() => {
         delete window["DeviceOrientationEvent"]
+        delete window["ontouchstart"]
       })
 
       it("", (done) => {
@@ -94,10 +96,12 @@ describe("DeviceOrientation", () => {
       beforeEach(() => {
         window.DeviceOrientationEvent =
           {} as typeof window.DeviceOrientationEvent
+        window.ontouchstart = () => {}
       })
 
       afterEach(() => {
         delete window["DeviceOrientationEvent"]
+        delete window["ontouchstart"]
       })
 
       it("", (done) => {

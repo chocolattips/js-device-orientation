@@ -37,7 +37,7 @@ export function useDeviceOrientation() {
   }
 
   function isSupported() {
-    return !!window.DeviceOrientationEvent
+    return !!window.DeviceOrientationEvent && "ontouchstart" in window
   }
 
   function permission() {
