@@ -1,46 +1,53 @@
 <template>
   <div>
-    <button @click="onClick">request permission</button>
-    <p v-if="hasDeviceOrientation">
-      {{ deviceOrientationValueString }}
-    </p>
-    <p v-if="hasError">Error : {{ error }}</p>
+    <div>
+      <p>supported : {{ state.deviceOrientation.isSupported() }}</p>
+      <p>permission : {{ state.deviceOrientation.permission() }}</p>
+    </div>
+
+    <div v-if="state.permission">
+      <p>alpha : {{ state.values.alpha }}</p>
+      <p>beta : {{ state.values.beta }}</p>
+      <p>gamma : {{ state.values.gamma }}</p>
+    </div>
+    <div v-else>
+      <button @click="onClick">request permission</button>
+    </div>
+
+    <div v-if="state.error.message">
+      <h3>Error</h3>
+      <p>{{ state.error.message }}</p>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive } from "@nuxtjs/composition-api"
+import { defineComponent, reactive } from "@nuxtjs/composition-api"
 
 import { DeviceOrientation } from "js-device-orientation/dist"
 
 export default defineComponent({
   setup() {
     const state = reactive({
-      deviceOrientation: {
+      deviceOrientation: DeviceOrientation.useDeviceOrientation(),
+      values: {
         alpha: 0,
         beta: 0,
         gamma: 0
       },
+      permission: false,
       error: {
         message: ""
       }
     })
 
-    const d = state.deviceOrientation
-    const hasError = computed(() => state.error.message)
-    const hasDeviceOrientation = computed(
-      () => d.alpha != 0 || d.beta != 0 || d.gamma != 0
-    )
-    const deviceOrientationValueString = computed(
-      () => `alpha:${d.alpha}, beta:${d.beta}, gamma;${d.gamma}`
-    )
-
     function onClick() {
-      DeviceOrientation.useDeviceOrientation()
+      state.deviceOrientation
         .requestPermission()
         .then(permitted => {
+          state.permission = true
           permitted.bind(e => {
-            state.deviceOrientation = {
+            state.values = {
               alpha: e.alpha,
               beta: e.beta,
               gamma: e.gamma
@@ -54,10 +61,8 @@ export default defineComponent({
     }
 
     return {
-      onClick,
-      hasError,
-      hasDeviceOrientation,
-      deviceOrientationValueString
+      state,
+      onClick
     }
   }
 })
