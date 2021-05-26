@@ -22,7 +22,7 @@ npm run package
 #### import
 
 ```ts
-import DeviceOrientation from "path/to/package"
+import { DeviceOrientation } from "path/to/package"
 ```
 
 or
@@ -32,7 +32,7 @@ npm install path/to/package
 ```
 
 ```ts
-import DeviceOrientation from "js-device-orientation/dist"
+import { DeviceOrientation } from "js-device-orientation/dist"
 ```
 
 #### script
